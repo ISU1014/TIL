@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+   http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd"
+   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+   >
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+		<!-- bean : 객체를 만드는 태그 -->
+		<!-- 히카리CP환경설정(DB연결 내용) -->
+		<!-- url ; 세미콜론  ?useSSL=false&amp;serverTimezone=UTC
+		/ Data Source Exploer에서는 ; 세미콜론 없이 ?useSSL=false&ampserverTimezone=UTC-->
+		<!--  -->
+		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		    <!-- ClassName Driver -->
+		    <property name="driverClassName" value="com.mysql.jdbc.Driver" /> 
+		    <!-- url -->
+		    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/mysql?useSSL=false&amp;serverTimezone=UTC" />
+       <property name="username" value="root"/>
+       <property name="password" value="12345"/>
+   </bean>
+
+		
+		   <!-- hikariConfig 생성되면 써먹을 수 있도록 HikariDataSource 객체 생성(커낵션 풀을 만든다) -->
+   
+   <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+       <constructor-arg ref="hikariConfig"/>
+   </bean>
+   
+   <!-- Mybatis가 커낵션풀과 연결, SQL문을 실행할수 있는 SqlSessionFactoryBean -->
+   
+   <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+       <property name="dataSource" ref="dataSource" />
+   </bean>
+
+		
+		   <!-- mapper를 메모리에 올린다(scan) -->
+   <mybatis-spring:scan base-package="kr.board.mapper"/>
+		
+
+</beans>
