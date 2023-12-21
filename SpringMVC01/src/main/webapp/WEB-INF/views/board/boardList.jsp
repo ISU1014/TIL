@@ -22,7 +22,7 @@
 		//location.href=""; 페이지 이동
 		//location.href="/boardInserForm.do"; --> 어떤 프로젝트의 요청인지 찾지 못함
 		//location.href="mvc/boardInsertForm.do" --> 만약 ContextPath가 달라지면 찾지 못함
-		location.href="${cpath}/boardInsertForm.do";
+		location.href="${cpath}/board/boardInsertForm.do";
 	}
 </script>
  
@@ -45,7 +45,7 @@
    			<!-- DB에서 값 가져와 반복문 작성 공간 -->
    		<c:forEach items="${list}" var="b">
    		<tr>
-   			<c:url var="contentLink" value="/boardContent.do/${b.idx}" />
+   			<c:url var="contentLink" value="/board/boardContent.do/${b.idx}" />
    			<td><a href="${contentLink}">${b.idx}</td>
    			<%-- cpath/boardContent.do/idx 
    				c:url 에 정리할때는 jstl은 무조건 프로젝트 내에서 이동

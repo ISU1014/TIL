@@ -25,7 +25,7 @@ public class BoardController {
 	
 	//메소드를 만들어서 메소드 단위로 기능 구현
 	//어떤 요청을 받아서 일하는 메소드인지 주석 표시
-	@RequestMapping("/boardList.do")
+	@RequestMapping("/board/boardList.do")
 	public String boardList(Model model) {
 		//Model : 컨트롤러에서 데이터를 View에 보내주는 객체
 		//마치 session같이, request영역에 저장하듯이
@@ -37,7 +37,7 @@ public class BoardController {
 		
 		//실행시킬 jsp이름 명시
 		//WEB-Inf/views/boardList.jsp생성
-		return "boardList";
+		return "board/boardList";
 	}
 	
 //  @RequestMapping("/boardInsertForm.do")
@@ -45,12 +45,12 @@ public class BoardController {
 //     // 단순히 페이지만을 띄워주는 메소드
 //     return "boardInsertForm";
 //  }
-  @RequestMapping("/boardInsertForm.do")
+  @RequestMapping("/board/boardInsertForm.do")
   public void boardInsertForm() {}
   // 메소드 이름이랑 jsp이름이랑 일치시켜주면 void로 설정했을때
   // 디폴트 경로로 메소드이름이 있는 jsp가 있는지 연결해줌
 	
-	@RequestMapping("/boardInsert.do")
+	@RequestMapping("/board/boardInsert.do")
 	public String boardInsert(Board vo) {
 		//servlet에선 request.getParameter("title") 작성
 		//스프링은 name값이랑 Board 프로퍼티 값이랑 같음을 알고 매칭
@@ -65,12 +65,12 @@ public class BoardController {
 		//메소드 boardList가 일을 하고 있음
 		// 다른 메소드로 이동 시킬때 viewResolver가 일하지 않는 신호
 		// -->redirect:/ 요청
-		return "redirect:/boardList.do";
+		return "redirect:/board/boardList.do";
 		//return "boardList.do"; => 빈깡통 ==>WEB-INF/views//boardList.do.jsp라고 인식
 	}
 	
 	//{idx} name값을 idx라고 지정.
-	@RequestMapping("/boardContent.do/{idx}")
+	@RequestMapping("/board/boardContent.do/{idx}")
 	public String boardContent(@PathVariable("idx") int theIdx,Model model) {
 		//request.getParameter("idx")로 받아오면 항상 String으로 넘어와 형변환이 필요했음
 		//스프링에서 한가지 값이 넘어온다면 매개변수 괄호 내에 
@@ -78,16 +78,16 @@ public class BoardController {
 		Board vo = mapper.boardContent(theIdx);
 		
 		model.addAttribute("vo",vo);
-		return "boardContent";
+		return "board/boardContent";
 	}
 	
-	@RequestMapping("/boardDelete.do/{idx}")
+	@RequestMapping("board/boardDelete.do/{idx}")
 	public String boardDelete(@PathVariable("idx") int theIdx) {
 		mapper.boardDelete(theIdx);
-		return "redirect:/boardList.do";
+		return "redirect:/board/boardList.do";
 	}
 	
-	@RequestMapping("/boardUpdateForm.do")
+	@RequestMapping("/board/boardUpdateForm.do")
 	public String boardUpdateForm(int idx,Model model) {
 		//쿼리스트링으로 값이 넘어오면 매개변수로 바로 받아올 수 있음
 		
@@ -95,16 +95,16 @@ public class BoardController {
 		//해당 idx를 가지는 게시글 내용 관련된 DB 일하기
 		Board vo = mapper.boardContent(idx);
 		model.addAttribute("vo",vo);
-		return "boardUpdateForm";
+		return "board/boardUpdateForm";
 	}
 	
 	
-	@RequestMapping("/boardUpdate.do")
+	@RequestMapping("/board/boardUpdate.do")
 	public String boardUpdate(Board vo) {
 							//form 태그의 name 인식하여 Board객체에 매칭
 		
 		mapper.boardUpdate(vo);
-		return"redirect:/boardList.do";
+		return"redirect:/board/boardList.do";
 				
 	}
 	

@@ -12,6 +12,6 @@
 </head>
 <body>
 	<!-- jstl은 따로 지정해주지 않아도 현재의 프로젝트내에서만 찾을 수 있게 실행 -->
-	<c:redirect url="board/boardList.do"/>
+	<c:redirect url="boardAjaxMain.do"/>
 </body>
 </html>
